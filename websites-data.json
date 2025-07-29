@@ -6,7 +6,15 @@
       "url": "https://geodle-game.netlify.app/",
       "description": "",
       "createdAt": "2025-07-29T07:10:51.117Z"
+    },
+    {
+      "id": 1753775692925,
+      "name": "Empdle",
+      "url": "https://empdle.netlify.app/",
+      "description": "Fun and free to play!",
+      "category": "entertainment",
+      "createdAt": "2025-07-29T07:54:52.925Z"
     }
   ],
-  "lastSync": "2025-07-29T07:54:01.100Z"
+  "lastSync": "2025-07-29T07:55:07.289Z"
 }
