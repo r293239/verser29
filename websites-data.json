@@ -1,20 +1,21 @@
 {
   "websites": [
     {
-      "id": 1753773051117,
-      "name": "Geodle",
-      "url": "https://geodle-game.netlify.app/",
-      "description": "",
-      "createdAt": "2025-07-29T07:10:51.117Z"
-    },
-    {
       "id": 1753775692925,
       "name": "Empdle",
       "url": "https://empdle.netlify.app/",
       "description": "Fun and free to play!",
       "category": "entertainment",
       "createdAt": "2025-07-29T07:54:52.925Z"
+    },
+    {
+      "id": 1753776371179,
+      "name": "Geodle",
+      "url": "https://geodle-game.netlify.app/",
+      "description": "Very fun online game for geography lovers!",
+      "category": "entertainment",
+      "createdAt": "2025-07-29T08:06:11.179Z"
     }
   ],
-  "lastSync": "2025-07-29T07:55:07.289Z"
+  "lastSync": "2025-07-29T08:06:15.498Z"
 }
