@@ -277,6 +277,34 @@
             opacity: 0.3;
         }
 
+        .feedback-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 80px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .feedback-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            text-decoration: none;
+            color: white;
+        }
+
         .admin-panel {
             position: fixed;
             top: 0;
@@ -468,6 +496,21 @@
                 margin: 20px;
                 padding: 20px;
             }
+
+            .feedback-btn {
+                bottom: 15px;
+                right: 15px;
+                padding: 10px 16px;
+                font-size: 12px;
+            }
+
+            .admin-trigger {
+                bottom: 15px;
+                right: 15px;
+                width: 40px;
+                height: 40px;
+                display: none;
+            }
         }
     </style>
 </head>
@@ -510,6 +553,14 @@
     <div class="footer">
         <p>Discover something new every day • Curated with ❤️</p>
     </div>
+
+    <!-- Help Me Improve Button -->
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSf66hYSFxnaQXvXmHlWU2MIGwIn3dkmiQ5iguGazXRKw4cSEg/viewform?usp=sharing&ouid=111077547070042896084" 
+       target="_blank" 
+       class="feedback-btn"
+       title="Help improve this website">
+        💡 Help Me Improve
+    </a>
 
     <!-- Hidden Admin Trigger -->
     <button class="admin-trigger" onclick="showAdminPanel()" title="Admin">⚙️</button>
