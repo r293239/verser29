@@ -623,8 +623,9 @@
                     <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxx">
                 </div>
                 <div class="form-group">
-                    <label for="githubRepo">Repository (username/repo-name)</label>
-                    <input type="text" id="githubRepo" placeholder="yourusername/website-directory">
+                    <label for="githubRepo">Repository (hardcoded)</label>
+                    <input type="text" id="githubRepo" value="r293239/verser29" disabled style="background-color: #f5f5f5; cursor: not-allowed;">
+                    <small style="color: #666; font-size: 12px;">Repository is pre-configured and cannot be changed</small>
                 </div>
                 <button class="btn" onclick="saveConfig()">Save Configuration</button>
                 <button class="btn btn-success" onclick="syncWithGitHub()">🔄 Sync with GitHub</button>
@@ -638,7 +639,10 @@
 
     <script>
         let websites = [];
-        let config = { githubToken: '', githubRepo: '' };
+        let config = { 
+            githubToken: '', 
+            githubRepo: 'r293239/verser29' // Hardcoded repository
+        };
         let currentCategory = 'all';
 
         const categoryEmojis = {
@@ -716,10 +720,13 @@
         function loadConfig() {
             const savedConfig = localStorage.getItem('githubConfig');
             if (savedConfig) {
-                config = JSON.parse(savedConfig);
+                const saved = JSON.parse(savedConfig);
+                config.githubToken = saved.githubToken; // Only load the token
                 document.getElementById('githubToken').value = config.githubToken;
-                document.getElementById('githubRepo').value = config.githubRepo;
             }
+            // Repository is hardcoded, so always set it in the form
+            document.getElementById('githubRepo').value = config.githubRepo;
+            document.getElementById('githubRepo').disabled = true; // Make it read-only
         }
 
         function renderWebsites() {
@@ -969,28 +976,31 @@
 
         function saveConfig() {
             config.githubToken = document.getElementById('githubToken').value;
-            config.githubRepo = document.getElementById('githubRepo').value;
+            // Repository is hardcoded, so don't change it
             
-            if (!config.githubToken || !config.githubRepo) {
-                showNotification('Please fill in all fields', 'error');
+            if (!config.githubToken) {
+                showNotification('Please enter your GitHub token', 'error');
                 return;
             }
 
-            localStorage.setItem('githubConfig', JSON.stringify(config));
+            // Only save the token, repository is hardcoded
+            localStorage.setItem('githubConfig', JSON.stringify({
+                githubToken: config.githubToken
+            }));
             showNotification('Configuration saved!', 'success');
         }
 
         function clearConfig() {
             localStorage.removeItem('githubConfig');
-            config = { githubToken: '', githubRepo: '' };
+            config.githubToken = ''; // Only clear the token
             document.getElementById('githubToken').value = '';
-            document.getElementById('githubRepo').value = '';
-            showNotification('Configuration cleared', 'success');
+            // Repository stays hardcoded
+            showNotification('Token cleared', 'success');
         }
 
         async function syncWithGitHub() {
-            if (!config.githubToken || !config.githubRepo) {
-                showNotification('Please configure GitHub settings first', 'error');
+            if (!config.githubToken) {
+                showNotification('Please add your GitHub token first', 'error');
                 return;
             }
 
