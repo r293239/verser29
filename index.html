@@ -318,25 +318,29 @@
             opacity: 0.8;
         }
 
-        /* Admin Panel Styles - Hidden by default */
+        /* Admin Panel Styles - Fixed visibility */
         .admin-trigger {
             position: fixed;
             bottom: 20px;
-            right: 20px;
+            left: 20px;
             width: 50px;
             height: 50px;
-            background: rgba(0,0,0,0.02);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             border: none;
             border-radius: 50%;
             cursor: pointer;
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 0px;
-            color: transparent;
+            opacity: 0.8;
+            transition: all 0.3s;
+            font-size: 20px;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 99;
         }
 
         .admin-trigger:hover {
-            opacity: 0.05;
+            opacity: 1;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
         }
 
         .passcode-overlay {
@@ -674,11 +678,10 @@
             }
 
             .admin-trigger {
-                bottom: 15px;
-                right: 15px;
+                bottom: 80px;
+                left: 15px;
                 width: 40px;
                 height: 40px;
-                display: none;
             }
 
             .sync-status {
@@ -762,8 +765,10 @@
         💡 Help Me Improve
     </a>
 
-    <!-- Hidden Admin Trigger -->
-    <button class="admin-trigger" style="display: none;"></button>
+    <!-- Visible Admin Trigger -->
+    <button class="admin-trigger" onclick="showPasscodeModal()" title="Admin Panel">
+        ⚙️
+    </button>
 
     <!-- Admin Panel -->
     <div class="admin-panel" id="adminPanel">
@@ -820,10 +825,10 @@
                 <h3>Multi-Device Sync Configuration</h3>
                 
                 <div class="sync-settings">
-                    <h4>Auto-Sync (Always Enabled)</h4>
-                    <p style="color: #666; font-size: 14px;">
-                        🔄 Your websites automatically sync every 2 minutes across all devices.<br>
-                        Changes are also synced when you switch tabs or make edits.
+                    <h4>Auto-Sync Status</h4>
+                    <p style="color: #666; font-size: 14px;" id="syncStatusText">
+                        🔄 Auto-sync will start when GitHub token is configured.<br>
+                        Syncs every 2 minutes and when you switch tabs.
                     </p>
                 </div>
 
@@ -850,8 +855,8 @@
                 
                 <div style="background: #f0f0f0; padding: 15px; border-radius: 8px; margin-top: 20px;">
                     <h4>Current Status</h4>
-                    <p>✅ Auto-sync is always active when GitHub token is configured</p>
-                    <p>🔄 Syncs every 2 minutes and on page focus</p>
+                    <p id="configStatus">❌ GitHub token not configured</p>
+                    <p>🔄 Auto-sync every 2 minutes when configured</p>
                     <p id="syncConflicts" style="color: #ff6b6b; display: none;">⚠️ Recent sync conflicts were resolved</p>
                 </div>
             </div>
@@ -864,10 +869,12 @@
         let websites = [];
         let config = { 
             githubToken: '', 
-            githubRepo: 'r293239/verser29'
+            githubRepo: 'r293239/verser29',
+            autoSync: true
         };
         let currentCategory = 'all';
         let autoSyncInterval = null;
+        let lastSyncTime = null;
 
         const categoryEmojis = {
             'tools': '🛠️',
@@ -899,6 +906,7 @@
             renderCategories();
             updateStats();
             setupSearch();
+            updateSyncStatus();
             
             // Auto-start sync if token is configured
             if (config.githubToken) {
@@ -906,6 +914,20 @@
                 // Initial pull after page load
                 setTimeout(() => pullFromGitHub(true), 3000);
             }
+
+            // Setup passcode input enter key
+            document.getElementById('passcodeInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkPasscode();
+                }
+            });
+
+            // Setup page visibility API for sync
+            document.addEventListener('visibilitychange', function() {
+                if (!document.hidden && config.githubToken) {
+                    pullFromGitHub(true);
+                }
+            });
         });
 
         function loadData() {
@@ -957,10 +979,521 @@
                 const saved = JSON.parse(savedConfig);
                 config = { ...config, ...saved };
                 document.getElementById('githubToken').value = config.githubToken || '';
-                
-                // Update auto-sync toggle
-                const toggle = document.getElementById('autoSyncToggle');
-                if (config.autoSync) {
-                    toggle.classList.add('active');
-                    startAutoSync();
+            }
+        }
+
+        function saveConfig() {
+            const token = document.getElementById('githubToken').value.trim();
+            config.githubToken = token;
+            
+            localStorage.setItem('syncConfig', JSON.stringify(config));
+            
+            if (token) {
+                startAutoSync();
+                showNotification('Configuration saved! Auto-sync enabled.', 'success');
+                updateSyncStatus();
+                // Test sync
+                setTimeout(() => pullFromGitHub(true), 1000);
+            } else {
+                stopAutoSync();
+                showNotification('Configuration saved! Auto-sync disabled.', 'success');
+                updateSyncStatus();
+            }
+        }
+
+        function clearConfig() {
+            if (confirm('Clear all sync configuration?')) {
+                config.githubToken = '';
+                document.getElementById('githubToken').value = '';
+                localStorage.removeItem('syncConfig');
+                stopAutoSync();
+                updateSyncStatus();
+                showNotification('Configuration cleared!', 'success');
+            }
+        }
+
+        function updateSyncStatus() {
+            const statusElement = document.getElementById('syncStatus');
+            const syncText = document.getElementById('syncText');
+            const configStatus = document.getElementById('configStatus');
+            const syncStatusText = document.getElementById('syncStatusText');
+            
+            if (config.githubToken) {
+                if (configStatus) configStatus.textContent = '✅ GitHub token configured - Auto-sync active';
+                if (syncStatusText) {
+                    syncStatusText.innerHTML = '✅ Auto-sync is active!<br>Syncs every 2 minutes and when you switch tabs.';
                 }
+                
+                if (lastSyncTime) {
+                    const timeAgo = getTimeAgo(lastSyncTime);
+                    syncText.textContent = `Last sync: ${timeAgo}`;
+                } else {
+                    syncText.textContent = 'Sync ready';
+                }
+                statusElement.classList.add('show');
+            } else {
+                if (configStatus) configStatus.textContent = '❌ GitHub token not configured';
+                if (syncStatusText) {
+                    syncStatusText.innerHTML = '🔄 Auto-sync will start when GitHub token is configured.<br>Syncs every 2 minutes and when you switch tabs.';
+                }
+                syncText.textContent = 'Sync disabled';
+                statusElement.classList.remove('show');
+            }
+        }
+
+        function getTimeAgo(timestamp) {
+            const now = new Date();
+            const diff = now - new Date(timestamp);
+            const minutes = Math.floor(diff / 60000);
+            
+            if (minutes < 1) return 'just now';
+            if (minutes < 60) return `${minutes}m ago`;
+            
+            const hours = Math.floor(minutes / 60);
+            if (hours < 24) return `${hours}h ago`;
+            
+            const days = Math.floor(hours / 24);
+            return `${days}d ago`;
+        }
+
+        function startAutoSync() {
+            if (autoSyncInterval) clearInterval(autoSyncInterval);
+            
+            // Sync every 2 minutes
+            autoSyncInterval = setInterval(() => {
+                if (config.githubToken) {
+                    pullFromGitHub(true);
+                }
+            }, 120000);
+        }
+
+        function stopAutoSync() {
+            if (autoSyncInterval) {
+                clearInterval(autoSyncInterval);
+                autoSyncInterval = null;
+            }
+        }
+
+        async function pullFromGitHub(silent = false) {
+            if (!config.githubToken) return;
+
+            const statusElement = document.getElementById('syncStatus');
+            const syncText = document.getElementById('syncText');
+            const syncIndicator = document.getElementById('syncIndicator');
+
+            try {
+                if (!silent) {
+                    statusElement.classList.add('syncing');
+                    syncIndicator.classList.add('syncing');
+                    syncText.textContent = 'Syncing...';
+                }
+
+                const response = await fetch(`https://api.github.com/repos/${config.githubRepo}/contents/websites.json`, {
+                    headers: {
+                        'Authorization': `token ${config.githubToken}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const remoteData = JSON.parse(atob(data.content));
+                    
+                    // Simple merge strategy - use remote if it has more websites or newer timestamp
+                    const shouldUpdate = remoteData.websites && 
+                        (remoteData.websites.length > websites.length || 
+                         new Date(remoteData.lastModified || 0) > new Date(localStorage.getItem('lastModified') || 0));
+
+                    if (shouldUpdate) {
+                        websites = remoteData.websites || websites;
+                        saveData();
+                        renderWebsites();
+                        renderCategories();
+                        updateStats();
+                        if (!silent) showNotification('Data synced from cloud!', 'success');
+                    }
+
+                    lastSyncTime = new Date().toISOString();
+                    localStorage.setItem('lastSyncTime', lastSyncTime);
+                } else if (response.status === 404) {
+                    // File doesn't exist, push current data
+                    await pushToGitHub();
+                }
+            } catch (error) {
+                console.error('Sync error:', error);
+                if (!silent) {
+                    statusElement.classList.add('error');
+                    syncText.textContent = 'Sync failed';
+                    setTimeout(() => {
+                        statusElement.classList.remove('error');
+                        updateSyncStatus();
+                    }, 3000);
+                }
+            } finally {
+                statusElement.classList.remove('syncing');
+                syncIndicator.classList.remove('syncing');
+                if (!statusElement.classList.contains('error')) {
+                    updateSyncStatus();
+                }
+            }
+        }
+
+        async function pushToGitHub() {
+            if (!config.githubToken) return;
+
+            try {
+                const dataToSync = {
+                    websites: websites,
+                    lastModified: new Date().toISOString(),
+                    version: '1.0'
+                };
+
+                // Get current file (if exists) to get SHA
+                let sha = null;
+                try {
+                    const getResponse = await fetch(`https://api.github.com/repos/${config.githubRepo}/contents/websites.json`, {
+                        headers: {
+                            'Authorization': `token ${config.githubToken}`,
+                            'Accept': 'application/vnd.github.v3+json'
+                        }
+                    });
+                    
+                    if (getResponse.ok) {
+                        const currentFile = await getResponse.json();
+                        sha = currentFile.sha;
+                    }
+                } catch (e) {
+                    // File might not exist, which is fine
+                }
+
+                const content = btoa(JSON.stringify(dataToSync, null, 2));
+                
+                const pushData = {
+                    message: `Update websites data - ${new Date().toISOString()}`,
+                    content: content
+                };
+
+                if (sha) {
+                    pushData.sha = sha;
+                }
+
+                const response = await fetch(`https://api.github.com/repos/${config.githubRepo}/contents/websites.json`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${config.githubToken}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(pushData)
+                });
+
+                if (response.ok) {
+                    lastSyncTime = new Date().toISOString();
+                    localStorage.setItem('lastSyncTime', lastSyncTime);
+                    localStorage.setItem('lastModified', dataToSync.lastModified);
+                    updateSyncStatus();
+                    return true;
+                } else {
+                    throw new Error(`Push failed: ${response.status}`);
+                }
+            } catch (error) {
+                console.error('Push error:', error);
+                return false;
+            }
+        }
+
+        function syncNow() {
+            showNotification('Manual sync started...', 'success');
+            pullFromGitHub().then(() => {
+                setTimeout(() => pushToGitHub(), 1000);
+            });
+        }
+
+        function exportData() {
+            const dataToExport = {
+                websites: websites,
+                exportDate: new Date().toISOString(),
+                version: '1.0'
+            };
+            
+            const blob = new Blob([JSON.stringify(dataToExport, null, 2)], {
+                type: 'application/json'
+            });
+            
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `websites-backup-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showNotification('Data exported successfully!', 'success');
+        }
+
+        // Admin Panel Functions
+        function showPasscodeModal() {
+            document.getElementById('passcodeOverlay').classList.add('active');
+            document.getElementById('passcodeInput').focus();
+        }
+
+        function hidePasscodeModal() {
+            document.getElementById('passcodeOverlay').classList.remove('active');
+            document.getElementById('passcodeInput').value = '';
+            document.getElementById('passcodeError').style.display = 'none';
+        }
+
+        function checkPasscode() {
+            const input = document.getElementById('passcodeInput').value;
+            const errorDiv = document.getElementById('passcodeError');
+            
+            // Simple passcode - you can change this
+            if (input === 'admin123') {
+                hidePasscodeModal();
+                showAdminPanel();
+            } else {
+                errorDiv.textContent = 'Incorrect passcode';
+                errorDiv.style.display = 'block';
+                document.getElementById('passcodeInput').value = '';
+            }
+        }
+
+        function showAdminPanel() {
+            document.getElementById('adminPanel').classList.add('active');
+            loadWebsiteList();
+        }
+
+        function hideAdminPanel() {
+            document.getElementById('adminPanel').classList.remove('active');
+        }
+
+        function switchTab(tabName) {
+            // Remove active class from all tabs and sections
+            document.querySelectorAll('.admin-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.admin-section').forEach(section => section.classList.remove('active'));
+            
+            // Add active class to selected tab and section
+            event.target.classList.add('active');
+            document.getElementById(tabName + 'Section').classList.add('active');
+            
+            if (tabName === 'manage') {
+                loadWebsiteList();
+            }
+        }
+
+        function addWebsite() {
+            const name = document.getElementById('websiteName').value.trim();
+            const url = document.getElementById('websiteUrl').value.trim();
+            const description = document.getElementById('websiteDescription').value.trim();
+            const category = document.getElementById('websiteCategory').value;
+
+            if (!name || !url || !description) {
+                showNotification('Please fill in all fields', 'error');
+                return;
+            }
+
+            const newWebsite = {
+                id: Date.now(),
+                name: name,
+                url: url,
+                description: description,
+                category: category,
+                createdAt: new Date().toISOString(),
+                lastModified: new Date().toISOString()
+            };
+
+            websites.unshift(newWebsite);
+            saveData();
+            renderWebsites();
+            renderCategories();
+            updateStats();
+
+            // Clear form
+            document.getElementById('websiteName').value = '';
+            document.getElementById('websiteUrl').value = '';
+            document.getElementById('websiteDescription').value = '';
+
+            showNotification('Website added successfully!', 'success');
+
+            // Auto-sync to cloud
+            if (config.githubToken) {
+                setTimeout(() => pushToGitHub(), 1000);
+            }
+        }
+
+        function loadWebsiteList() {
+            const list = document.getElementById('websiteList');
+            list.innerHTML = websites.map(website => `
+                <div class="website-item">
+                    <div>
+                        <strong>${website.name}</strong><br>
+                        <small>${website.url}</small>
+                    </div>
+                    <div>
+                        <button class="btn btn-small btn-danger" onclick="deleteWebsite(${website.id})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function deleteWebsite(id) {
+            if (confirm('Delete this website?')) {
+                websites = websites.filter(w => w.id !== id);
+                saveData();
+                renderWebsites();
+                renderCategories();
+                updateStats();
+                loadWebsiteList();
+                showNotification('Website deleted!', 'success');
+
+                // Auto-sync to cloud
+                if (config.githubToken) {
+                    setTimeout(() => pushToGitHub(), 1000);
+                }
+            }
+        }
+
+        // Rendering Functions
+        function renderWebsites() {
+            const grid = document.getElementById('websitesGrid');
+            const filteredWebsites = currentCategory === 'all' 
+                ? websites 
+                : websites.filter(w => w.category === currentCategory);
+
+            grid.innerHTML = filteredWebsites.map(website => {
+                const categoryEmoji = categoryEmojis[website.category] || '🌐';
+                const categoryName = categoryNames[website.category] || 'Other';
+                const domain = new URL(website.url).hostname.replace('www.', '');
+                const firstLetter = website.name.charAt(0).toUpperCase();
+
+                return `
+                    <div class="website-card">
+                        <div class="website-header">
+                            <div class="website-icon">${firstLetter}</div>
+                            <div class="website-info">
+                                <h3>${website.name}</h3>
+                                <div class="website-category">${categoryEmoji} ${categoryName}</div>
+                            </div>
+                        </div>
+                        <div class="website-description">${website.description}</div>
+                        <div class="website-footer">
+                            <a href="${website.url}" class="website-url" target="_blank" rel="noopener">${domain}</a>
+                            <a href="${website.url}" class="visit-btn" target="_blank" rel="noopener">
+                                Visit Site →
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderCategories() {
+            const categoriesContainer = document.getElementById('categories');
+            const categories = [...new Set(websites.map(w => w.category))];
+            
+            const categoryHTML = [
+                '<a href="#" class="category-tag active" data-category="all">All</a>',
+                ...categories.map(cat => {
+                    const emoji = categoryEmojis[cat] || '🌐';
+                    const name = categoryNames[cat] || cat;
+                    return `<a href="#" class="category-tag" data-category="${cat}">${emoji} ${name}</a>`;
+                })
+            ].join('');
+
+            categoriesContainer.innerHTML = categoryHTML;
+
+            // Add event listeners
+            categoriesContainer.querySelectorAll('.category-tag').forEach(tag => {
+                tag.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    currentCategory = tag.dataset.category;
+                    
+                    // Update active state
+                    categoriesContainer.querySelectorAll('.category-tag').forEach(t => t.classList.remove('active'));
+                    tag.classList.add('active');
+                    
+                    renderWebsites();
+                });
+            });
+        }
+
+        function updateStats() {
+            document.getElementById('totalWebsites').textContent = websites.length;
+            document.getElementById('totalCategories').textContent = new Set(websites.map(w => w.category)).size;
+        }
+
+        function setupSearch() {
+            const searchBox = document.getElementById('searchBox');
+            let searchTimeout;
+
+            searchBox.addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    const query = e.target.value.toLowerCase().trim();
+                    
+                    if (query) {
+                        const filtered = websites.filter(w => 
+                            w.name.toLowerCase().includes(query) ||
+                            w.description.toLowerCase().includes(query) ||
+                            w.category.toLowerCase().includes(query)
+                        );
+                        
+                        const grid = document.getElementById('websitesGrid');
+                        grid.innerHTML = filtered.map(website => {
+                            const categoryEmoji = categoryEmojis[website.category] || '🌐';
+                            const categoryName = categoryNames[website.category] || 'Other';
+                            const domain = new URL(website.url).hostname.replace('www.', '');
+                            const firstLetter = website.name.charAt(0).toUpperCase();
+
+                            return `
+                                <div class="website-card">
+                                    <div class="website-header">
+                                        <div class="website-icon">${firstLetter}</div>
+                                        <div class="website-info">
+                                            <h3>${website.name}</h3>
+                                            <div class="website-category">${categoryEmoji} ${categoryName}</div>
+                                        </div>
+                                    </div>
+                                    <div class="website-description">${website.description}</div>
+                                    <div class="website-footer">
+                                        <a href="${website.url}" class="website-url" target="_blank" rel="noopener">${domain}</a>
+                                        <a href="${website.url}" class="visit-btn" target="_blank" rel="noopener">
+                                            Visit Site →
+                                        </a>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('');
+                        
+                        if (filtered.length === 0) {
+                            grid.innerHTML = '<div style="text-align: center; color: white; grid-column: 1 / -1; padding: 40px;">No websites found matching your search.</div>';
+                        }
+                    } else {
+                        renderWebsites();
+                    }
+                }, 300);
+            });
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Load last sync time on startup
+        window.addEventListener('load', function() {
+            const savedSyncTime = localStorage.getItem('lastSyncTime');
+            if (savedSyncTime) {
+                lastSyncTime = savedSyncTime;
+            }
+        });
+    </script>
+</body>
+</html>
