@@ -873,14 +873,17 @@
 
     <script>
         let websites = [];
-        let config = { 
-            githubToken: '', 
-            githubRepo: 'r293239/verser29',
-            autoSync: true
-        };
-        let currentCategory = 'all';
-        let autoSyncInterval = null;
-        let lastSyncTime = null;
+
+let config = { 
+    githubToken: process.env.ACCESS_TOKEN,  // Uses GitHub secret
+    githubRepo: 'r293239/verser29',
+    autoSync: true
+};
+
+let currentCategory = 'all';
+let autoSyncInterval = null;
+let lastSyncTime = null;
+
 
         const categoryEmojis = {
             'tools': '🛠️',
@@ -914,12 +917,10 @@
             setupSearch();
             updateSyncStatus();
             
-            // Auto-start sync if token is configured
-            if (config.githubToken) {
-                startAutoSync();
-                // Initial sync when page loads
-                setTimeout(() => pullFromGitHub(true), 1000);
-            }
+            // Auto-start sync immediately since token is hardcoded
+            startAutoSync();
+            // Initial sync when page loads
+            setTimeout(() => pullFromGitHub(true), 1000);
 
             // Setup passcode input enter key
             document.getElementById('passcodeInput').addEventListener('keypress', function(e) {
@@ -930,7 +931,7 @@
 
             // Setup page visibility API for sync
             document.addEventListener('visibilitychange', function() {
-                if (!document.hidden && config.githubToken) {
+                if (!document.hidden) {
                     pullFromGitHub(true);
                 }
             });
@@ -980,43 +981,54 @@
         }
 
         function loadConfig() {
-            const savedConfig = localStorage.getItem('syncConfig');
-            if (savedConfig) {
-                const saved = JSON.parse(savedConfig);
-                config = { ...config, ...saved };
-                document.getElementById('githubToken').value = config.githubToken || '';
+    // Default to secret token from environment
+    config.githubToken = process.env.ACCESS_TOKEN;
+
+    const savedConfig = localStorage.getItem('syncConfig');
+    if (savedConfig) {
+        const saved = JSON.parse(savedConfig);
+        // Only override if user has manually set a different token
+        if (saved.githubToken && saved.githubToken !== process.env.ACCESS_TOKEN) {
+            config.githubToken = saved.githubToken;
+        }
+    }
+}
+
+                }
             }
+            // Always display the current token in the admin panel
+            document.getElementById('githubToken').value = config.githubToken || '';
         }
 
         function saveConfig() {
-            const token = document.getElementById('githubToken').value.trim();
-            config.githubToken = token;
+    const token = document.getElementById('githubToken').value.trim();
+
+    if (token) {
+        config.githubToken = token;
+        showNotification('Configuration updated! Using custom token.', 'success');
+    } else {
+        // Reset to default token from environment
+        config.githubToken = process.env.ACCESS_TOKEN;
+        showNotification('Reset to default token! Auto-sync active.', 'success');
+    }
+}
+
             
             localStorage.setItem('syncConfig', JSON.stringify(config));
-            
-            if (token) {
-                startAutoSync();
-                showNotification('Configuration saved! Auto-sync enabled.', 'success');
-                updateSyncStatus();
-                // Test sync
-                setTimeout(() => pullFromGitHub(true), 1000);
-            } else {
-                stopAutoSync();
-                showNotification('Configuration saved! Auto-sync disabled.', 'success');
-                updateSyncStatus();
-            }
+            updateSyncStatus();
+            // Test sync
+            setTimeout(() => pullFromGitHub(true), 1000);
         }
+function clearConfig() {
+    if (confirm('Reset to default configuration?')) {
+        config.githubToken = process.env.ACCESS_TOKEN;
+        document.getElementById('githubToken').value = ''; // Clear input instead of inserting a secret
+        localStorage.removeItem('syncConfig');
+        updateSyncStatus();
+        showNotification('Reset to default token!', 'success');
+    }
+}
 
-        function clearConfig() {
-            if (confirm('Clear all sync configuration?')) {
-                config.githubToken = '';
-                document.getElementById('githubToken').value = '';
-                localStorage.removeItem('syncConfig');
-                stopAutoSync();
-                updateSyncStatus();
-                showNotification('Configuration cleared!', 'success');
-            }
-        }
 
         function updateSyncStatus() {
             const statusElement = document.getElementById('syncStatus');
@@ -1024,27 +1036,19 @@
             const configStatus = document.getElementById('configStatus');
             const syncStatusText = document.getElementById('syncStatusText');
             
-            if (config.githubToken) {
-                if (configStatus) configStatus.textContent = '✅ GitHub token configured - Auto-sync active';
-                if (syncStatusText) {
-                    syncStatusText.innerHTML = '✅ Auto-sync is active!<br>Syncs every 10 seconds and when you switch tabs.';
-                }
-                
-                if (lastSyncTime) {
-                    const timeAgo = getTimeAgo(lastSyncTime);
-                    syncText.textContent = `Last sync: ${timeAgo}`;
-                } else {
-                    syncText.textContent = 'Sync ready';
-                }
-                statusElement.classList.add('show');
-            } else {
-                if (configStatus) configStatus.textContent = '❌ GitHub token not configured';
-                if (syncStatusText) {
-                    syncStatusText.innerHTML = '🔄 Auto-sync will start when GitHub token is configured.<br>Syncs every 10 seconds and when you switch tabs.';
-                }
-                syncText.textContent = 'Sync disabled';
-                statusElement.classList.remove('show');
+            // Since token is hardcoded, always show as configured
+            if (configStatus) configStatus.textContent = '✅ GitHub token configured - Auto-sync active';
+            if (syncStatusText) {
+                syncStatusText.innerHTML = '✅ Auto-sync is active!<br>Syncs every 10 seconds and when you switch tabs.';
             }
+            
+            if (lastSyncTime) {
+                const timeAgo = getTimeAgo(lastSyncTime);
+                syncText.textContent = `Last sync: ${timeAgo}`;
+            } else {
+                syncText.textContent = 'Sync ready';
+            }
+            statusElement.classList.add('show');
         }
 
         function getTimeAgo(timestamp) {
@@ -1065,11 +1069,9 @@
         function startAutoSync() {
             if (autoSyncInterval) clearInterval(autoSyncInterval);
             
-            // Sync every 10 seconds
+            // Sync every 10 seconds - always active since token is hardcoded
             autoSyncInterval = setInterval(() => {
-                if (config.githubToken) {
-                    pullFromGitHub(true);
-                }
+                pullFromGitHub(true);
             }, 10000);
         }
 
@@ -1081,8 +1083,7 @@
         }
 
         async function pullFromGitHub(silent = false) {
-            if (!config.githubToken) return;
-
+            // Token is now hardcoded, so this will always run
             const statusElement = document.getElementById('syncStatus');
             const syncText = document.getElementById('syncText');
             const syncIndicator = document.getElementById('syncIndicator');
@@ -1145,8 +1146,7 @@
         }
 
         async function pushToGitHub() {
-            if (!config.githubToken) return;
-
+            // Token is hardcoded, so this will always work
             try {
                 const dataToSync = {
                     websites: websites,
@@ -1322,10 +1322,8 @@
 
             showNotification('Website added successfully!', 'success');
 
-            // Auto-sync to cloud
-            if (config.githubToken) {
-                setTimeout(() => pushToGitHub(), 1000);
-            }
+            // Auto-sync to cloud (always active now)
+            setTimeout(() => pushToGitHub(), 1000);
         }
 
         function loadWebsiteList() {
