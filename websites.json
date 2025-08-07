@@ -1,6 +1,15 @@
 {
   "websites": [
     {
+      "id": 1754527444598,
+      "name": "CentuarAI",
+      "url": "https://centuarai.netlify.app/",
+      "description": "WIP chess AI",
+      "category": "tools",
+      "createdAt": "2025-08-07T00:44:04.598Z",
+      "lastModified": "2025-08-07T00:44:04.598Z"
+    },
+    {
       "id": 1753775692925,
       "name": "Empdle",
       "url": "https://empdle.netlify.app/",
@@ -25,6 +34,6 @@
       "createdAt": "2025-07-29T08:08:19.101Z"
     }
   ],
-  "lastModified": "2025-08-07T00:42:31.873Z",
+  "lastModified": "2025-08-07T00:44:05.601Z",
   "version": "1.0"
 }
