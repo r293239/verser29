@@ -1,39 +1,25 @@
 {
   "websites": [
     {
-      "id": 1754527444598,
-      "name": "CentuarAI",
-      "url": "https://centuarai.netlify.app/",
-      "description": "WIP chess AI",
-      "category": "tools",
-      "createdAt": "2025-08-07T00:44:04.598Z",
-      "lastModified": "2025-08-07T00:44:04.598Z"
-    },
-    {
-      "id": 1753775692925,
-      "name": "Empdle",
-      "url": "https://empdle.netlify.app/",
-      "description": "Fun and free to play!",
-      "category": "entertainment",
-      "createdAt": "2025-07-29T07:54:52.925Z"
-    },
-    {
-      "id": 1753776371179,
+      "id": 1,
       "name": "Geodle",
-      "url": "https://geodle-game.netlify.app/",
-      "description": "Very fun online game for geography lovers!",
-      "category": "entertainment",
-      "createdAt": "2025-07-29T08:06:11.179Z"
+      "url": "https://r293239.github.io/Geodle/",
+      "description": "Free Geography game that is both fun and educational.",
+      "category": "games"
     },
     {
-      "id": 1753776499101,
-      "name": "MapMyWeather",
-      "url": "https://r293239.github.io/MapMyWeather/",
-      "description": "A interactive weather forecasting website that you can play around with.",
-      "category": "tools",
-      "createdAt": "2025-07-29T08:08:19.101Z"
+      "id": 2,
+      "name": "Carbon",
+      "url": "https://carbon.now.sh",
+      "description": "Create and share beautiful images of your source code.",
+      "category": "development"
+    },
+    {
+      "id": 3,
+      "name": "Notion",
+      "url": "https://notion.so",
+      "description": "A new tool that blends your everyday work apps into one. It's the all-in-one workspace.",
+      "category": "productivity"
     }
-  ],
-  "lastModified": "2025-08-07T09:53:33.332Z",
-  "version": "1.0"
+  ]
 }
