@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discover Amazing Websites - Curated Collection</title>
-    <meta name="description" content="Discover the most useful, creative, and amazing websites on the internet. A curated collection of tools, resources, and hidden gems.">
+    <title>verser29</title>
+    <meta name="description" content="verser29 — my website creations hub by r29">
     <style>
         * {
             margin: 0;
@@ -16,519 +16,453 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #333;
-            line-height: 1.6;
+            color: #1a1a2e;
+            line-height: 1.5;
         }
 
+        /* simple hero — just the name */
         .hero {
             text-align: center;
-            padding: 80px 20px;
-            color: white;
-            background: rgba(0,0,0,0.1);
+            padding: 3rem 1.5rem 1.5rem;
         }
 
         .hero h1 {
             font-size: 3.5rem;
             font-weight: 700;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            background: linear-gradient(45deg, #fff, #f0f0f0);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .search-container {
-            max-width: 500px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .search-box {
-            width: 100%;
-            padding: 15px 50px 15px 20px;
-            border: none;
-            border-radius: 50px;
-            font-size: 16px;
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .search-box:focus {
-            outline: none;
-            background: white;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-
-        .search-icon {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #667eea;
-            font-size: 20px;
+        .hero .badge {
+            display: inline-block;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.8);
+            background: rgba(255,255,255,0.15);
+            padding: 0.25rem 1rem;
+            border-radius: 30px;
+            backdrop-filter: blur(4px);
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 1.5rem 1.5rem 3rem;
         }
 
+        /* stats row — minimal */
         .stats {
             display: flex;
             justify-content: center;
-            gap: 40px;
-            margin-bottom: 50px;
+            gap: 2rem;
+            margin-bottom: 2rem;
             flex-wrap: wrap;
         }
 
         .stat {
             text-align: center;
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(8px);
+            padding: 0.5rem 1.2rem;
+            border-radius: 60px;
             color: white;
+            font-size: 0.85rem;
+            font-weight: 500;
         }
 
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            display: block;
+        .stat span {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-right: 0.25rem;
         }
 
-        .stat-label {
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
+        /* category filter — simple pills */
         .categories {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 40px;
+            gap: 0.7rem;
+            margin-bottom: 2rem;
             flex-wrap: wrap;
         }
 
         .category-tag {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(4px);
             color: white;
-            padding: 8px 20px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-size: 14px;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
             font-weight: 500;
-            transition: all 0.3s;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.3);
             cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
-        .category-tag:hover, .category-tag.active {
+        .category-tag:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-1px);
+        }
+
+        .category-tag.active {
             background: white;
             color: #667eea;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border-color: white;
         }
 
+        /* search box — optional but useful */
+        .search-box {
+            max-width: 320px;
+            margin: 0 auto 2rem auto;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 0.7rem 1.2rem;
+            border: none;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            background: rgba(255,255,255,0.95);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            outline: none;
+            text-align: center;
+        }
+        .search-box input:focus {
+            background: white;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        }
+
+        /* website grid — emphasis on each creation */
         .websites-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 25px;
-            margin-bottom: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
         }
 
         .website-card {
             background: white;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .website-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            border-radius: 1.5rem;
+            padding: 1.2rem 1.5rem;
+            transition: all 0.25s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
         .website-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 16px 28px rgba(0,0,0,0.12);
         }
 
         .website-header {
             display: flex;
             align-items: center;
-            margin-bottom: 15px;
+            gap: 1rem;
+            margin-bottom: 0.6rem;
         }
 
         .website-icon {
             width: 48px;
             height: 48px;
-            border-radius: 12px;
             background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 20px;
-            font-weight: bold;
-            margin-right: 15px;
+            font-weight: 700;
+            font-size: 1.3rem;
             flex-shrink: 0;
+        }
+
+        .website-info {
+            flex: 1;
         }
 
         .website-info h3 {
             font-size: 1.3rem;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 5px;
+            font-weight: 650;
+            color: #1e1b2e;
+            margin-bottom: 0.2rem;
         }
 
         .website-category {
-            font-size: 0.8rem;
-            color: #667eea;
+            font-size: 0.7rem;
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            color: #764ba2;
         }
 
         .website-description {
-            color: #666;
-            margin-bottom: 20px;
-            line-height: 1.6;
+            color: #4a4a5a;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.45;
+            padding-left: 0.2rem;
         }
 
         .website-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
         .website-url {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: color 0.3s;
-        }
-
-        .website-url:hover {
-            color: #764ba2;
-            text-decoration: underline;
+            font-size: 0.75rem;
+            color: #888;
+            font-family: monospace;
+            word-break: break-all;
         }
 
         .visit-btn {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 500;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+            transition: all 0.2s;
+            display: inline-block;
         }
 
         .visit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.4);
         }
 
         .footer {
             text-align: center;
-            padding: 40px 20px;
-            color: white;
-            opacity: 0.8;
+            padding: 2rem 1rem;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.75rem;
         }
 
-        .loading {
+        .loading, .no-results {
             text-align: center;
             color: white;
-            font-size: 1.2rem;
-            padding: 40px;
+            padding: 2rem;
+            background: rgba(0,0,0,0.2);
+            border-radius: 1.5rem;
         }
 
-        .error {
-            text-align: center;
-            color: white;
-            background: rgba(255, 0, 0, 0.2);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero p {
-                font-size: 1.1rem;
-            }
-            
-            .stats {
-                gap: 20px;
-            }
-            
-            .websites-grid {
-                grid-template-columns: 1fr;
-            }
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2.5rem; }
+            .website-card { padding: 1rem 1.2rem; }
+            .website-info h3 { font-size: 1.1rem; }
         }
     </style>
 </head>
 <body>
-    <div class="hero">
-        <h1>🌟 Discover Amazing Websites</h1>
-        <p>A curated collection of the most useful, creative, and inspiring websites on the internet</p>
+
+<div class="hero">
+    <h1>verser29</h1>
+    <div class="badge">✦ creations by r29 ✦</div>
+</div>
+
+<div class="container">
+    <div class="stats">
+        <div class="stat"><span id="totalCount">0</span> projects</div>
+        <div class="stat"><span id="categoryCount">0</span> categories</div>
+    </div>
+
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="filter projects...">
+    </div>
+
+    <div class="categories" id="categoryFilter">
+        <button class="category-tag active" data-cat="all">all</button>
+    </div>
+
+    <div class="websites-grid" id="websitesGrid">
+        <div class="loading">loading...</div>
+    </div>
+</div>
+
+<div class="footer">
+    verser29 · link hub for all my websites
+</div>
+
+<script>
+    // ----------------------------------------------
+    // CONFIG: point to your external JSON file
+    // You will create 'websites.json' in the same folder
+    // ----------------------------------------------
+    const DATA_FILE = 'websites.json';
+
+    let allWebsites = [];
+    let currentCategory = 'all';
+    let currentSearch = '';
+
+    // Helper: get unique categories
+    function getCategories(websites) {
+        const cats = [...new Set(websites.map(w => w.category))];
+        return cats.sort();
+    }
+
+    // Render category buttons
+    function renderCategories(websites) {
+        const categories = getCategories(websites);
+        const container = document.getElementById('categoryFilter');
         
-        <div class="search-container">
-            <input type="text" class="search-box" placeholder="Search websites..." id="searchBox">
-            <span class="search-icon">🔍</span>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="stats">
-            <div class="stat">
-                <span class="stat-number" id="totalWebsites">0</span>
-                <span class="stat-label">Curated Websites</span>
-            </div>
-            <div class="stat">
-                <span class="stat-number" id="totalCategories">0</span>
-                <span class="stat-label">Categories</span>
-            </div>
-            <div class="stat">
-                <span class="stat-number">∞</span>
-                <span class="stat-label">Possibilities</span>
-            </div>
-        </div>
-
-        <div class="categories" id="categories">
-            <a href="#" class="category-tag active" data-category="all">All</a>
-        </div>
-
-        <div class="websites-grid" id="websitesGrid">
-            <div class="loading">Loading websites...</div>
-        </div>
-    </div>
-
-    <div class="footer">
-        <p>Discover something new every day • Curated with ❤️</p>
-    </div>
-
-    <script>
-        // Configuration
-        const WEBSITES_DATA_URL = 'websites.json'; // Path to your external JSON file
-        
-        // Global variables
-        let websites = [];
-        let currentCategory = 'all';
-        let filteredWebsites = [];
-
-        // Category mapping
-        const categoryEmojis = {
-            'tools': '🛠️',
-            'design': '🎨',
-            'development': '💻',
-            'productivity': '⚡',
-            'education': '📚',
-            'entertainment': '🎮',
-            'resources': '📁',
-            'other': '🌐'
-        };
-
-        const categoryNames = {
-            'tools': 'Tools',
-            'design': 'Design',
-            'development': 'Development',
-            'productivity': 'Productivity',
-            'education': 'Education',
-            'entertainment': 'Entertainment',
-            'resources': 'Resources',
-            'other': 'Other'
-        };
-
-        // Initialize on page load
-        window.addEventListener('load', function() {
-            loadWebsites();
-            setupSearch();
+        let html = `<button class="category-tag active" data-cat="all">all</button>`;
+        categories.forEach(cat => {
+            html += `<button class="category-tag" data-cat="${cat}">${cat}</button>`;
         });
+        container.innerHTML = html;
 
-        // Load websites from external JSON file
-        async function loadWebsites() {
+        // attach event listeners
+        document.querySelectorAll('.category-tag').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.category-tag').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCategory = btn.dataset.cat;
+                applyFilterAndRender();
+            });
+        });
+    }
+
+    // Filter logic (category + search)
+    function getFilteredWebsites() {
+        let filtered = [...allWebsites];
+        
+        if (currentCategory !== 'all') {
+            filtered = filtered.filter(w => w.category === currentCategory);
+        }
+        
+        if (currentSearch.trim() !== '') {
+            const query = currentSearch.toLowerCase();
+            filtered = filtered.filter(w => 
+                w.name.toLowerCase().includes(query) ||
+                (w.description && w.description.toLowerCase().includes(query))
+            );
+        }
+        
+        return filtered;
+    }
+
+    // Update stats (counts)
+    function updateStats(filtered) {
+        const uniqueCats = new Set(filtered.map(w => w.category)).size;
+        document.getElementById('totalCount').innerText = filtered.length;
+        document.getElementById('categoryCount').innerText = uniqueCats;
+    }
+
+    // Render website cards
+    function renderWebsites() {
+        const grid = document.getElementById('websitesGrid');
+        const filtered = getFilteredWebsites();
+        
+        if (!allWebsites.length) {
+            grid.innerHTML = '<div class="loading">✨ loading creations...</div>';
+            return;
+        }
+        
+        if (filtered.length === 0) {
+            grid.innerHTML = '<div class="no-results">no matching projects found</div>';
+            updateStats(filtered);
+            return;
+        }
+        
+        let html = '';
+        filtered.forEach(site => {
+            // get first letter for icon
+            const firstLetter = site.name.charAt(0).toUpperCase();
+            // display domain nicely
+            let displayUrl = site.url;
             try {
-                const response = await fetch(WEBSITES_DATA_URL);
-                
-                if (!response.ok) {
-                    throw new Error(`Failed to load websites: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                
-                if (data.websites && Array.isArray(data.websites)) {
-                    websites = data.websites;
-                    filteredWebsites = [...websites];
-                    renderWebsites();
-                    renderCategories();
-                    updateStats();
-                } else {
-                    throw new Error('Invalid data format: expected "websites" array');
-                }
-            } catch (error) {
-                console.error('Error loading websites:', error);
-                document.getElementById('websitesGrid').innerHTML = `
-                    <div class="error" style="grid-column: 1 / -1;">
-                        <h3>Error Loading Websites</h3>
-                        <p>${error.message}</p>
-                        <p>Please check that the websites.json file exists and is properly formatted.</p>
-                    </div>
-                `;
-            }
-        }
-
-        // Rendering Functions
-        function renderWebsites() {
-            const grid = document.getElementById('websitesGrid');
+                const urlObj = new URL(site.url);
+                displayUrl = urlObj.hostname.replace('www.', '');
+            } catch(e) { /* keep original */ }
             
-            if (filteredWebsites.length === 0) {
-                grid.innerHTML = '<div style="text-align: center; color: white; grid-column: 1 / -1; padding: 40px;">No websites found.</div>';
-                return;
-            }
-
-            grid.innerHTML = filteredWebsites.map(website => {
-                const categoryEmoji = categoryEmojis[website.category] || '🌐';
-                const categoryName = categoryNames[website.category] || 'Other';
-                
-                let domain;
-                try {
-                    domain = new URL(website.url).hostname.replace('www.', '');
-                } catch (e) {
-                    domain = website.url;
-                }
-                
-                const firstLetter = website.name.charAt(0).toUpperCase();
-
-                return `
-                    <div class="website-card">
-                        <div class="website-header">
-                            <div class="website-icon">${firstLetter}</div>
-                            <div class="website-info">
-                                <h3>${website.name}</h3>
-                                <div class="website-category">${categoryEmoji} ${categoryName}</div>
-                            </div>
-                        </div>
-                        <div class="website-description">${website.description}</div>
-                        <div class="website-footer">
-                            <a href="${website.url}" class="website-url" target="_blank" rel="noopener">${domain}</a>
-                            <a href="${website.url}" class="visit-btn" target="_blank" rel="noopener">
-                                Visit Site →
-                            </a>
+            html += `
+                <div class="website-card">
+                    <div class="website-header">
+                        <div class="website-icon">${firstLetter}</div>
+                        <div class="website-info">
+                            <h3>${escapeHtml(site.name)}</h3>
+                            <div class="website-category">✦ ${escapeHtml(site.category)}</div>
                         </div>
                     </div>
-                `;
-            }).join('');
-        }
-
-        function renderCategories() {
-            const categoriesContainer = document.getElementById('categories');
-            const categories = [...new Set(websites.map(w => w.category))];
+                    <div class="website-description">${escapeHtml(site.description)}</div>
+                    <div class="website-footer">
+                        <span class="website-url">${escapeHtml(displayUrl)}</span>
+                        <a href="${escapeHtml(site.url)}" class="visit-btn" target="_blank" rel="noopener noreferrer">visit →</a>
+                    </div>
+                </div>
+            `;
+        });
+        
+        grid.innerHTML = html;
+        updateStats(filtered);
+    }
+    
+    // simple escape to avoid XSS
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+            return c;
+        });
+    }
+    
+    function applyFilterAndRender() {
+        renderWebsites();
+    }
+    
+    // Load external JSON file
+    async function loadWebsites() {
+        try {
+            const response = await fetch(DATA_FILE);
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            const data = await response.json();
             
-            const categoryHTML = [
-                '<a href="#" class="category-tag active" data-category="all">All</a>',
-                ...categories.map(cat => {
-                    const emoji = categoryEmojis[cat] || '🌐';
-                    const name = categoryNames[cat] || cat;
-                    return `<a href="#" class="category-tag" data-category="${cat}">${emoji} ${name}</a>`;
-                })
-            ].join('');
-
-            categoriesContainer.innerHTML = categoryHTML;
-
-            // Add event listeners
-            categoriesContainer.querySelectorAll('.category-tag').forEach(tag => {
-                tag.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    currentCategory = tag.dataset.category;
-                    
-                    // Update active state
-                    categoriesContainer.querySelectorAll('.category-tag').forEach(t => t.classList.remove('active'));
-                    tag.classList.add('active');
-                    
-                    // Filter websites
-                    if (currentCategory === 'all') {
-                        filteredWebsites = [...websites];
-                    } else {
-                        filteredWebsites = websites.filter(w => w.category === currentCategory);
-                    }
-                    
-                    renderWebsites();
-                    updateStats();
-                });
-            });
+            // expected format: { "websites": [ ... ] }
+            if (data.websites && Array.isArray(data.websites)) {
+                allWebsites = data.websites;
+                // ensure each item has required fields
+                allWebsites = allWebsites.filter(site => site.name && site.url && site.category);
+                renderCategories(allWebsites);
+                renderWebsites();
+            } else {
+                throw new Error('Missing "websites" array');
+            }
+        } catch (err) {
+            console.error(err);
+            document.getElementById('websitesGrid').innerHTML = `
+                <div class="no-results" style="background:rgba(0,0,0,0.3);">
+                    ⚠️ could not load websites.json<br>
+                    make sure the file exists in the same folder as index.html<br><br>
+                    <span style="font-size:0.8rem;">format: { "websites": [ { "name": "...", "url": "...", "category": "...", "description": "..." } ] }</span>
+                </div>
+            `;
         }
+    }
+    
+    // Search handler
+    function setupSearch() {
+        const input = document.getElementById('searchInput');
+        let debounce;
+        input.addEventListener('input', (e) => {
+            clearTimeout(debounce);
+            debounce = setTimeout(() => {
+                currentSearch = e.target.value;
+                applyFilterAndRender();
+            }, 250);
+        });
+    }
+    
+    // start
+    loadWebsites();
+    setupSearch();
+</script>
 
-        function updateStats() {
-            document.getElementById('totalWebsites').textContent = filteredWebsites.length;
-            document.getElementById('totalCategories').textContent = new Set(filteredWebsites.map(w => w.category)).size;
-        }
-
-        function setupSearch() {
-            const searchBox = document.getElementById('searchBox');
-            let searchTimeout;
-
-            searchBox.addEventListener('input', (e) => {
-                clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(() => {
-                    const query = e.target.value.toLowerCase().trim();
-                    
-                    if (query) {
-                        // Filter based on current category and search query
-                        let results = websites;
-                        
-                        if (currentCategory !== 'all') {
-                            results = websites.filter(w => w.category === currentCategory);
-                        }
-                        
-                        filteredWebsites = results.filter(w => 
-                            w.name.toLowerCase().includes(query) ||
-                            w.description.toLowerCase().includes(query) ||
-                            w.category.toLowerCase().includes(query)
-                        );
-                        
-                        renderWebsites();
-                        updateStats();
-                    } else {
-                        // Reset to current category filter
-                        if (currentCategory === 'all') {
-                            filteredWebsites = [...websites];
-                        } else {
-                            filteredWebsites = websites.filter(w => w.category === currentCategory);
-                        }
-                        
-                        renderWebsites();
-                        updateStats();
-                    }
-                }, 300);
-            });
-        }
-    </script>
 </body>
 </html>
