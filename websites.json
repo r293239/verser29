@@ -1,25 +1,40 @@
 {
   "websites": [
     {
-      "id": 1,
       "name": "Geodle",
-      "url": "https://r293239.github.io/Geodle/",
-      "description": "Free Geography game that is both fun and educational.",
-      "category": "games"
+      "url": "https://github.com/r293239/Geodle",
+      "category": "game",
+      "description": "Wordle but geography"
     },
     {
-      "id": 2,
-      "name": "Carbon",
-      "url": "https://carbon.now.sh",
-      "description": "Create and share beautiful images of your source code.",
-      "category": "development"
+      "name": "MapMyWeather",
+      "url": "https://github.com/r293239/MapMyWeather",
+      "category": "weather",
+      "description": "Your world's weather, mapped and at your fingertips"
     },
     {
-      "id": 3,
-      "name": "Notion",
-      "url": "https://notion.so",
-      "description": "A new tool that blends your everyday work apps into one. It's the all-in-one workspace.",
-      "category": "productivity"
+      "name": "Battle-Waves",
+      "url": "https://github.com/r293239/Battle-Waves",
+      "category": "game",
+      "description": "PvE combat game"
+    },
+    {
+      "name": "Battleship",
+      "url": "https://github.com/r293239/Battleship",
+      "category": "game",
+      "description": "Classic Battleship game"
+    },
+    {
+      "name": "Chatrise",
+      "url": "https://github.com/r293239/Chatrise",
+      "category": "social",
+      "description": "Messenger application"
+    },
+    {
+      "name": "CentuarAI",
+      "url": "https://github.com/r293239/CentuarAI",
+      "category": "ai",
+      "description": "Chess AI"
     }
   ]
 }
