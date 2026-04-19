@@ -2,39 +2,39 @@
   "websites": [
     {
       "name": "Geodle",
-      "url": "https://github.com/r293239/Geodle",
+      "url": "https://r293239.github.io/Geodle/",
       "category": "game",
-      "description": "Wordle but geography"
+      "description": "Wordle but geography — guess the mystery country using flag and fact clues. Features daily challenges, path mode, and multiple game modes."
     },
     {
       "name": "MapMyWeather",
-      "url": "https://github.com/r293239/MapMyWeather",
+      "url": "https://map-my-weather.netlify.app",
       "category": "weather",
-      "description": "Your world's weather, mapped and at your fingertips"
+      "description": "Interactive weather app that maps real-time conditions worldwide. Search any location to view temperature, conditions, and forecasts on an intuitive map interface."
     },
     {
       "name": "Battle-Waves",
-      "url": "https://github.com/r293239/Battle-Waves",
+      "url": "https://r293239.github.io/Battle-Waves/",
       "category": "game",
-      "description": "PvE combat game"
+      "description": "PVE combat game with wave-based enemy encounters. Fight progressively harder enemies, upgrade abilities, and survive as long as possible."
     },
     {
       "name": "Battleship",
-      "url": "https://github.com/r293239/Battleship",
+      "url": "https://r293239.github.io/Battleship/",
       "category": "game",
-      "description": "Classic Battleship game"
+      "description": "Classic Battleship game with multiple modes: play against AI, local two-player, or try reversed/modified rule sets."
     },
     {
       "name": "Chatrise",
-      "url": "https://github.com/r293239/Chatrise",
+      "url": "https://chatriseweb.netlify.app",
       "category": "social",
-      "description": "Messenger application"
+      "description": "Real-time web messenger with global chat rooms, direct messaging, online status, and responsive design for desktop and mobile."
     },
     {
       "name": "CentuarAI",
-      "url": "https://github.com/r293239/CentuarAI",
+      "url": "https://centuarai.netlify.app",
       "category": "ai",
-      "description": "Chess AI"
+      "description": "Browser-based chess AI with multiple difficulty levels (Beginner to Master), move analysis, undo/redo, and real-time board evaluation."
     }
   ]
 }
