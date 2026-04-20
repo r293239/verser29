@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>verser29</title>
-    <meta name="description" content="verser29 — my website creations hub by r29">
+    <meta name="description" content="verser29 — creative hub by r29. all my website creations in one place.">
     <style>
         * {
             margin: 0;
@@ -13,392 +13,432 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: radial-gradient(circle at 10% 20%, #0b1120, #0a0f1a);
             min-height: 100vh;
-            color: #1a1a2e;
+            color: #eef2ff;
             line-height: 1.5;
+            padding: 2rem 1.5rem;
         }
 
-        /* simple hero — just the name */
-        .hero {
-            text-align: center;
-            padding: 3rem 1.5rem 1.5rem;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            color: white;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .hero .badge {
-            display: inline-block;
-            margin-top: 0.5rem;
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.8);
-            background: rgba(255,255,255,0.15);
-            padding: 0.25rem 1rem;
-            border-radius: 30px;
-            backdrop-filter: blur(4px);
+        /* animated background orbs */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 70% 30%, rgba(99, 102, 241, 0.15), transparent 50%),
+                        radial-gradient(circle at 20% 80%, rgba(168, 85, 247, 0.15), transparent 50%);
+            pointer-events: none;
+            z-index: 0;
         }
 
         .container {
-            max-width: 900px;
+            position: relative;
+            z-index: 2;
+            max-width: 1300px;
             margin: 0 auto;
-            padding: 1.5rem 1.5rem 3rem;
         }
 
-        /* stats row — minimal */
+        /* header */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #fff, #c084fc, #60a5fa);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+        }
+
+        .hero .tagline {
+            font-size: 1rem;
+            color: #94a3b8;
+            background: rgba(255,255,255,0.05);
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* stats row */
         .stats {
             display: flex;
             justify-content: center;
             gap: 2rem;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             flex-wrap: wrap;
         }
 
-        .stat {
-            text-align: center;
-            background: rgba(255,255,255,0.12);
+        .stat-card {
+            background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(8px);
-            padding: 0.5rem 1.2rem;
+            padding: 0.6rem 1.5rem;
             border-radius: 60px;
-            color: white;
-            font-size: 0.85rem;
+            border: 1px solid rgba(255,255,255,0.1);
             font-weight: 500;
-        }
-
-        .stat span {
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin-right: 0.25rem;
-        }
-
-        /* category filter — simple pills */
-        .categories {
-            display: flex;
-            justify-content: center;
-            gap: 0.7rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .category-tag {
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(4px);
-            color: white;
-            padding: 0.4rem 1.2rem;
-            border-radius: 40px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .category-tag:hover {
-            background: rgba(255,255,255,0.3);
-            transform: translateY(-1px);
-        }
-
-        .category-tag.active {
-            background: white;
-            color: #667eea;
-            border-color: white;
-        }
-
-        /* search box — optional but useful */
-        .search-box {
-            max-width: 320px;
-            margin: 0 auto 2rem auto;
-        }
-        .search-box input {
-            width: 100%;
-            padding: 0.7rem 1.2rem;
-            border: none;
-            border-radius: 60px;
             font-size: 0.9rem;
-            background: rgba(255,255,255,0.95);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            outline: none;
-            text-align: center;
-        }
-        .search-box input:focus {
-            background: white;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
         }
 
-        /* website grid — emphasis on each creation */
-        .websites-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
+        .stat-card span {
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: #a78bfa;
+            margin-right: 0.3rem;
         }
 
-        .website-card {
-            background: white;
-            border-radius: 1.5rem;
-            padding: 1.2rem 1.5rem;
-            transition: all 0.25s ease;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-
-        .website-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 16px 28px rgba(0,0,0,0.12);
-        }
-
-        .website-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 0.6rem;
-        }
-
-        .website-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 1.3rem;
-            flex-shrink: 0;
-        }
-
-        .website-info {
-            flex: 1;
-        }
-
-        .website-info h3 {
-            font-size: 1.3rem;
-            font-weight: 650;
-            color: #1e1b2e;
-            margin-bottom: 0.2rem;
-        }
-
-        .website-category {
-            font-size: 0.7rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #764ba2;
-        }
-
-        .website-description {
-            color: #4a4a5a;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-            line-height: 1.45;
-            padding-left: 0.2rem;
-        }
-
-        .website-footer {
+        /* search + filter row */
+        .controls {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(8px);
+            padding: 0.8rem 1.5rem;
+            border-radius: 80px;
+            border: 1px solid rgba(255,255,255,0.08);
         }
 
-        .website-url {
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .search-box input {
+            width: 100%;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: #8b5cf6;
+            background: rgba(0,0,0,0.6);
+        }
+
+        .search-box input::placeholder {
+            color: #94a3b8;
+        }
+
+        .filters {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #cbd5e1;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            background: rgba(139, 92, 246, 0.3);
+            border-color: #8b5cf6;
+        }
+
+        .filter-btn.active {
+            background: #8b5cf6;
+            color: white;
+            border-color: #8b5cf6;
+        }
+
+        /* project grid — emphasis on each card */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 1.8rem;
+            margin-top: 1rem;
+        }
+
+        .project-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 2rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.3);
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(139, 92, 246, 0.5);
+            background: rgba(20, 30, 55, 0.8);
+            box-shadow: 0 25px 40px -12px rgba(0,0,0,0.4);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            border-radius: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            box-shadow: 0 8px 14px -6px rgba(0,0,0,0.3);
+        }
+
+        .project-title h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .project-category {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            background: rgba(139, 92, 246, 0.3);
+            display: inline-block;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            color: #c4b5fd;
+        }
+
+        .project-description {
+            margin: 1rem 0 1.2rem;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .repo-link {
             font-size: 0.75rem;
-            color: #888;
+            color: #94a3b8;
+            text-decoration: none;
             font-family: monospace;
-            word-break: break-all;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .repo-link:hover {
+            color: #a78bfa;
         }
 
         .visit-btn {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
             padding: 0.5rem 1.2rem;
             border-radius: 2rem;
             text-decoration: none;
+            color: white;
+            font-weight: 600;
             font-size: 0.8rem;
-            font-weight: 500;
             transition: all 0.2s;
-            display: inline-block;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
 
         .visit-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.4);
+            transform: scale(1.02);
+            background: linear-gradient(135deg, #a78bfa, #7c3aed);
+            box-shadow: 0 6px 14px rgba(139, 92, 246, 0.3);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(0,0,0,0.3);
+            border-radius: 2rem;
+            grid-column: 1 / -1;
         }
 
         .footer {
             text-align: center;
-            padding: 2rem 1rem;
-            color: rgba(255,255,255,0.7);
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
             font-size: 0.75rem;
+            color: #64748b;
         }
 
-        .loading, .no-results {
-            text-align: center;
-            color: white;
-            padding: 2rem;
-            background: rgba(0,0,0,0.2);
-            border-radius: 1.5rem;
-        }
-
-        @media (max-width: 600px) {
-            .hero h1 { font-size: 2.5rem; }
-            .website-card { padding: 1rem 1.2rem; }
-            .website-info h3 { font-size: 1.1rem; }
+        @media (max-width: 700px) {
+            body { padding: 1rem; }
+            .hero h1 { font-size: 2.8rem; }
+            .controls { flex-direction: column; align-items: stretch; border-radius: 1.5rem; }
+            .filters { justify-content: center; }
+            .projects-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-
-<div class="hero">
-    <h1>verser29</h1>
-    <div class="badge">✦ creations by r29 ✦</div>
-</div>
-
 <div class="container">
-    <div class="stats">
-        <div class="stat"><span id="totalCount">0</span> projects</div>
-        <div class="stat"><span id="categoryCount">0</span> categories</div>
+    <div class="hero">
+        <h1>verser29</h1>
+        <div class="tagline">✦ creations by r29 ✦</div>
     </div>
 
-    <div class="search-box">
-        <input type="text" id="searchInput" placeholder="filter projects...">
+    <div class="stats" id="stats">
+        <div class="stat-card"><span id="projectCount">0</span> projects</div>
+        <div class="stat-card"><span id="categoryCount">0</span> categories</div>
     </div>
 
-    <div class="categories" id="categoryFilter">
-        <button class="category-tag active" data-cat="all">all</button>
+    <div class="controls">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="🔍 search projects...">
+        </div>
+        <div class="filters" id="filterContainer">
+            <button class="filter-btn active" data-category="all">all</button>
+        </div>
     </div>
 
-    <div class="websites-grid" id="websitesGrid">
-        <div class="loading">loading...</div>
+    <div class="projects-grid" id="projectsGrid">
+        <div class="no-results">✨ loading your creations...</div>
     </div>
-</div>
 
-<div class="footer">
-    verser29 · link hub for all my websites
+    <div class="footer">
+        verser29 · live from GitHub · every project is a website
+    </div>
 </div>
 
 <script>
-    // ----------------------------------------------
-    // CONFIG: point to your external JSON file
-    // You will create 'websites.json' in the same folder
-    // ----------------------------------------------
-    const DATA_FILE = 'websites.json';
+    // Load websites.json
+    let allProjects = [];
+    let currentCategory = "all";
+    let currentSearch = "";
 
-    let allWebsites = [];
-    let currentCategory = 'all';
-    let currentSearch = '';
-
-    // Helper: get unique categories
-    function getCategories(websites) {
-        const cats = [...new Set(websites.map(w => w.category))];
-        return cats.sort();
+    async function loadProjects() {
+        try {
+            const response = await fetch("websites.json");
+            if (!response.ok) throw new Error("Failed to load websites.json");
+            const data = await response.json();
+            if (data.websites && Array.isArray(data.websites)) {
+                allProjects = data.websites;
+                renderFilters();
+                renderProjects();
+            } else {
+                throw new Error("Invalid JSON structure");
+            }
+        } catch (err) {
+            document.getElementById("projectsGrid").innerHTML = `<div class="no-results">⚠️ Could not load websites.json. Make sure the file exists in the same folder.</div>`;
+            console.error(err);
+        }
     }
 
-    // Render category buttons
-    function renderCategories(websites) {
-        const categories = getCategories(websites);
-        const container = document.getElementById('categoryFilter');
-        
-        let html = `<button class="category-tag active" data-cat="all">all</button>`;
+    function getUniqueCategories() {
+        const cats = allProjects.map(p => p.category);
+        return [...new Set(cats)];
+    }
+
+    function renderFilters() {
+        const categories = getUniqueCategories();
+        const container = document.getElementById("filterContainer");
+        let html = `<button class="filter-btn active" data-category="all">all</button>`;
         categories.forEach(cat => {
-            html += `<button class="category-tag" data-cat="${cat}">${cat}</button>`;
+            html += `<button class="filter-btn" data-category="${cat}">${cat}</button>`;
         });
         container.innerHTML = html;
 
-        // attach event listeners
-        document.querySelectorAll('.category-tag').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                document.querySelectorAll('.category-tag').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentCategory = btn.dataset.cat;
-                applyFilterAndRender();
+        // attach events
+        document.querySelectorAll(".filter-btn").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                currentCategory = btn.dataset.category;
+                renderProjects();
             });
         });
     }
 
-    // Filter logic (category + search)
-    function getFilteredWebsites() {
-        let filtered = [...allWebsites];
-        
-        if (currentCategory !== 'all') {
-            filtered = filtered.filter(w => w.category === currentCategory);
+    function getFilteredProjects() {
+        let filtered = [...allProjects];
+        if (currentCategory !== "all") {
+            filtered = filtered.filter(p => p.category === currentCategory);
         }
-        
-        if (currentSearch.trim() !== '') {
+        if (currentSearch.trim() !== "") {
             const query = currentSearch.toLowerCase();
-            filtered = filtered.filter(w => 
-                w.name.toLowerCase().includes(query) ||
-                (w.description && w.description.toLowerCase().includes(query))
+            filtered = filtered.filter(p => 
+                p.name.toLowerCase().includes(query) || 
+                p.description.toLowerCase().includes(query)
             );
         }
-        
         return filtered;
     }
 
-    // Update stats (counts)
-    function updateStats(filtered) {
-        const uniqueCats = new Set(filtered.map(w => w.category)).size;
-        document.getElementById('totalCount').innerText = filtered.length;
-        document.getElementById('categoryCount').innerText = uniqueCats;
-    }
+    function renderProjects() {
+        const filtered = getFilteredProjects();
+        const grid = document.getElementById("projectsGrid");
+        const projectCountSpan = document.getElementById("projectCount");
+        const categoryCountSpan = document.getElementById("categoryCount");
 
-    // Render website cards
-    function renderWebsites() {
-        const grid = document.getElementById('websitesGrid');
-        const filtered = getFilteredWebsites();
-        
-        if (!allWebsites.length) {
-            grid.innerHTML = '<div class="loading">✨ loading creations...</div>';
-            return;
-        }
-        
+        projectCountSpan.innerText = filtered.length;
+        const uniqueCats = new Set(filtered.map(p => p.category)).size;
+        categoryCountSpan.innerText = uniqueCats;
+
         if (filtered.length === 0) {
-            grid.innerHTML = '<div class="no-results">no matching projects found</div>';
-            updateStats(filtered);
+            grid.innerHTML = `<div class="no-results">✨ no matching projects found</div>`;
             return;
         }
-        
-        let html = '';
-        filtered.forEach(site => {
-            // get first letter for icon
-            const firstLetter = site.name.charAt(0).toUpperCase();
-            // display domain nicely
-            let displayUrl = site.url;
-            try {
-                const urlObj = new URL(site.url);
-                displayUrl = urlObj.hostname.replace('www.', '');
-            } catch(e) { /* keep original */ }
-            
-            html += `
-                <div class="website-card">
-                    <div class="website-header">
-                        <div class="website-icon">${firstLetter}</div>
-                        <div class="website-info">
-                            <h3>${escapeHtml(site.name)}</h3>
-                            <div class="website-category">✦ ${escapeHtml(site.category)}</div>
+
+        grid.innerHTML = filtered.map(project => {
+            const firstLetter = project.name.charAt(0).toUpperCase();
+            // Extract repo name from GitHub URL for display
+            const repoName = project.url.includes("github.com") ? project.url.split("/").pop() : project.name;
+            return `
+                <div class="project-card">
+                    <div class="card-header">
+                        <div class="project-icon">${firstLetter}</div>
+                        <div class="project-title">
+                            <h3>${escapeHtml(project.name)}</h3>
+                            <span class="project-category">✦ ${escapeHtml(project.category)}</span>
                         </div>
                     </div>
-                    <div class="website-description">${escapeHtml(site.description)}</div>
-                    <div class="website-footer">
-                        <span class="website-url">${escapeHtml(displayUrl)}</span>
-                        <a href="${escapeHtml(site.url)}" class="visit-btn" target="_blank" rel="noopener noreferrer">visit →</a>
+                    <div class="project-description">${escapeHtml(project.description)}</div>
+                    <div class="card-footer">
+                        <a href="${escapeHtml(project.url)}" class="repo-link" target="_blank" rel="noopener noreferrer">
+                            📁 ${escapeHtml(repoName)}
+                        </a>
+                        <a href="${escapeHtml(project.url)}" class="visit-btn" target="_blank" rel="noopener noreferrer">
+                            visit site →
+                        </a>
                     </div>
                 </div>
             `;
-        });
-        
-        grid.innerHTML = html;
-        updateStats(filtered);
+        }).join('');
     }
-    
-    // simple escape to avoid XSS
+
     function escapeHtml(str) {
         if (!str) return '';
         return str.replace(/[&<>]/g, function(m) {
@@ -406,63 +446,476 @@
             if (m === '<') return '&lt;';
             if (m === '>') return '&gt;';
             return m;
-        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-            return c;
         });
     }
-    
-    function applyFilterAndRender() {
-        renderWebsites();
-    }
-    
-    // Load external JSON file
-    async function loadWebsites() {
+
+    // search listener
+    document.getElementById("searchInput").addEventListener("input", (e) => {
+        currentSearch = e.target.value;
+        renderProjects();
+    });
+
+    loadProjects();
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>verser29</title>
+    <meta name="description" content="verser29 — creative hub by r29. all my website creations in one place.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: radial-gradient(circle at 10% 20%, #0b1120, #0a0f1a);
+            min-height: 100vh;
+            color: #eef2ff;
+            line-height: 1.5;
+            padding: 2rem 1.5rem;
+        }
+
+        /* animated background orbs */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 70% 30%, rgba(99, 102, 241, 0.15), transparent 50%),
+                        radial-gradient(circle at 20% 80%, rgba(168, 85, 247, 0.15), transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* header */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #fff, #c084fc, #60a5fa);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+        }
+
+        .hero .tagline {
+            font-size: 1rem;
+            color: #94a3b8;
+            background: rgba(255,255,255,0.05);
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* stats row */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            padding: 0.6rem 1.5rem;
+            border-radius: 60px;
+            border: 1px solid rgba(255,255,255,0.1);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .stat-card span {
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: #a78bfa;
+            margin-right: 0.3rem;
+        }
+
+        /* search + filter row */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(8px);
+            padding: 0.8rem 1.5rem;
+            border-radius: 80px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .search-box input {
+            width: 100%;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: #8b5cf6;
+            background: rgba(0,0,0,0.6);
+        }
+
+        .search-box input::placeholder {
+            color: #94a3b8;
+        }
+
+        .filters {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #cbd5e1;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            background: rgba(139, 92, 246, 0.3);
+            border-color: #8b5cf6;
+        }
+
+        .filter-btn.active {
+            background: #8b5cf6;
+            color: white;
+            border-color: #8b5cf6;
+        }
+
+        /* project grid — emphasis on each card */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 1.8rem;
+            margin-top: 1rem;
+        }
+
+        .project-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 2rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.3);
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(139, 92, 246, 0.5);
+            background: rgba(20, 30, 55, 0.8);
+            box-shadow: 0 25px 40px -12px rgba(0,0,0,0.4);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            border-radius: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            box-shadow: 0 8px 14px -6px rgba(0,0,0,0.3);
+        }
+
+        .project-title h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .project-category {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            background: rgba(139, 92, 246, 0.3);
+            display: inline-block;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            color: #c4b5fd;
+        }
+
+        .project-description {
+            margin: 1rem 0 1.2rem;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .repo-link {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            text-decoration: none;
+            font-family: monospace;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .repo-link:hover {
+            color: #a78bfa;
+        }
+
+        .visit-btn {
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        .visit-btn:hover {
+            transform: scale(1.02);
+            background: linear-gradient(135deg, #a78bfa, #7c3aed);
+            box-shadow: 0 6px 14px rgba(139, 92, 246, 0.3);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(0,0,0,0.3);
+            border-radius: 2rem;
+            grid-column: 1 / -1;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        @media (max-width: 700px) {
+            body { padding: 1rem; }
+            .hero h1 { font-size: 2.8rem; }
+            .controls { flex-direction: column; align-items: stretch; border-radius: 1.5rem; }
+            .filters { justify-content: center; }
+            .projects-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1>verser29</h1>
+        <div class="tagline">✦ creations by r29 ✦</div>
+    </div>
+
+    <div class="stats" id="stats">
+        <div class="stat-card"><span id="projectCount">0</span> projects</div>
+        <div class="stat-card"><span id="categoryCount">0</span> categories</div>
+    </div>
+
+    <div class="controls">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="🔍 search projects...">
+        </div>
+        <div class="filters" id="filterContainer">
+            <button class="filter-btn active" data-category="all">all</button>
+        </div>
+    </div>
+
+    <div class="projects-grid" id="projectsGrid">
+        <div class="no-results">✨ loading your creations...</div>
+    </div>
+
+    <div class="footer">
+        verser29 · live from GitHub · every project is a website
+    </div>
+</div>
+
+<script>
+    // Load websites.json
+    let allProjects = [];
+    let currentCategory = "all";
+    let currentSearch = "";
+
+    async function loadProjects() {
         try {
-            const response = await fetch(DATA_FILE);
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}`);
-            }
+            const response = await fetch("websites.json");
+            if (!response.ok) throw new Error("Failed to load websites.json");
             const data = await response.json();
-            
-            // expected format: { "websites": [ ... ] }
             if (data.websites && Array.isArray(data.websites)) {
-                allWebsites = data.websites;
-                // ensure each item has required fields
-                allWebsites = allWebsites.filter(site => site.name && site.url && site.category);
-                renderCategories(allWebsites);
-                renderWebsites();
+                allProjects = data.websites;
+                renderFilters();
+                renderProjects();
             } else {
-                throw new Error('Missing "websites" array');
+                throw new Error("Invalid JSON structure");
             }
         } catch (err) {
+            document.getElementById("projectsGrid").innerHTML = `<div class="no-results">⚠️ Could not load websites.json. Make sure the file exists in the same folder.</div>`;
             console.error(err);
-            document.getElementById('websitesGrid').innerHTML = `
-                <div class="no-results" style="background:rgba(0,0,0,0.3);">
-                    ⚠️ could not load websites.json<br>
-                    make sure the file exists in the same folder as index.html<br><br>
-                    <span style="font-size:0.8rem;">format: { "websites": [ { "name": "...", "url": "...", "category": "...", "description": "..." } ] }</span>
-                </div>
-            `;
         }
     }
-    
-    // Search handler
-    function setupSearch() {
-        const input = document.getElementById('searchInput');
-        let debounce;
-        input.addEventListener('input', (e) => {
-            clearTimeout(debounce);
-            debounce = setTimeout(() => {
-                currentSearch = e.target.value;
-                applyFilterAndRender();
-            }, 250);
+
+    function getUniqueCategories() {
+        const cats = allProjects.map(p => p.category);
+        return [...new Set(cats)];
+    }
+
+    function renderFilters() {
+        const categories = getUniqueCategories();
+        const container = document.getElementById("filterContainer");
+        let html = `<button class="filter-btn active" data-category="all">all</button>`;
+        categories.forEach(cat => {
+            html += `<button class="filter-btn" data-category="${cat}">${cat}</button>`;
+        });
+        container.innerHTML = html;
+
+        // attach events
+        document.querySelectorAll(".filter-btn").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                currentCategory = btn.dataset.category;
+                renderProjects();
+            });
         });
     }
-    
-    // start
-    loadWebsites();
-    setupSearch();
-</script>
 
+    function getFilteredProjects() {
+        let filtered = [...allProjects];
+        if (currentCategory !== "all") {
+            filtered = filtered.filter(p => p.category === currentCategory);
+        }
+        if (currentSearch.trim() !== "") {
+            const query = currentSearch.toLowerCase();
+            filtered = filtered.filter(p => 
+                p.name.toLowerCase().includes(query) || 
+                p.description.toLowerCase().includes(query)
+            );
+        }
+        return filtered;
+    }
+
+    function renderProjects() {
+        const filtered = getFilteredProjects();
+        const grid = document.getElementById("projectsGrid");
+        const projectCountSpan = document.getElementById("projectCount");
+        const categoryCountSpan = document.getElementById("categoryCount");
+
+        projectCountSpan.innerText = filtered.length;
+        const uniqueCats = new Set(filtered.map(p => p.category)).size;
+        categoryCountSpan.innerText = uniqueCats;
+
+        if (filtered.length === 0) {
+            grid.innerHTML = `<div class="no-results">✨ no matching projects found</div>`;
+            return;
+        }
+
+        grid.innerHTML = filtered.map(project => {
+            const firstLetter = project.name.charAt(0).toUpperCase();
+            // Extract repo name from GitHub URL for display
+            const repoName = project.url.includes("github.com") ? project.url.split("/").pop() : project.name;
+            return `
+                <div class="project-card">
+                    <div class="card-header">
+                        <div class="project-icon">${firstLetter}</div>
+                        <div class="project-title">
+                            <h3>${escapeHtml(project.name)}</h3>
+                            <span class="project-category">✦ ${escapeHtml(project.category)}</span>
+                        </div>
+                    </div>
+                    <div class="project-description">${escapeHtml(project.description)}</div>
+                    <div class="card-footer">
+                        <a href="${escapeHtml(project.url)}" class="repo-link" target="_blank" rel="noopener noreferrer">
+                            📁 ${escapeHtml(repoName)}
+                        </a>
+                        <a href="${escapeHtml(project.url)}" class="visit-btn" target="_blank" rel="noopener noreferrer">
+                            visit site →
+                        </a>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // search listener
+    document.getElementById("searchInput").addEventListener("input", (e) => {
+        currentSearch = e.target.value;
+        renderProjects();
+    });
+
+    loadProjects();
+</script>
 </body>
 </html>
