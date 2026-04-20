@@ -21,28 +21,11 @@
             padding: 2rem 1.5rem;
         }
 
-        /* animated background orbs */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 70% 30%, rgba(99, 102, 241, 0.15), transparent 50%),
-                        radial-gradient(circle at 20% 80%, rgba(168, 85, 247, 0.15), transparent 50%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
         .container {
-            position: relative;
-            z-index: 2;
             max-width: 1300px;
             margin: 0 auto;
         }
 
-        /* header */
         .hero {
             text-align: center;
             margin-bottom: 3rem;
@@ -57,7 +40,6 @@
             -webkit-background-clip: text;
             color: transparent;
             margin-bottom: 0.5rem;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
         }
 
         .hero .tagline {
@@ -67,11 +49,8 @@
             display: inline-block;
             padding: 0.4rem 1.2rem;
             border-radius: 40px;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* stats row */
         .stats {
             display: flex;
             justify-content: center;
@@ -82,7 +61,6 @@
 
         .stat-card {
             background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(8px);
             padding: 0.6rem 1.5rem;
             border-radius: 60px;
             border: 1px solid rgba(255,255,255,0.1);
@@ -97,7 +75,6 @@
             margin-right: 0.3rem;
         }
 
-        /* search + filter row */
         .controls {
             display: flex;
             justify-content: space-between;
@@ -106,7 +83,6 @@
             gap: 1rem;
             margin-bottom: 2.5rem;
             background: rgba(15, 23, 42, 0.4);
-            backdrop-filter: blur(8px);
             padding: 0.8rem 1.5rem;
             border-radius: 80px;
             border: 1px solid rgba(255,255,255,0.08);
@@ -126,12 +102,10 @@
             color: white;
             font-size: 0.9rem;
             outline: none;
-            transition: all 0.2s;
         }
 
         .search-box input:focus {
             border-color: #8b5cf6;
-            background: rgba(0,0,0,0.6);
         }
 
         .search-box input::placeholder {
@@ -158,38 +132,31 @@
 
         .filter-btn:hover {
             background: rgba(139, 92, 246, 0.3);
-            border-color: #8b5cf6;
         }
 
         .filter-btn.active {
             background: #8b5cf6;
             color: white;
-            border-color: #8b5cf6;
         }
 
-        /* project grid — emphasis on each card */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
             gap: 1.8rem;
-            margin-top: 1rem;
         }
 
         .project-card {
             background: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(12px);
             border-radius: 2rem;
             padding: 1.5rem;
             border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
         }
 
         .project-card:hover {
             transform: translateY(-6px);
             border-color: rgba(139, 92, 246, 0.5);
             background: rgba(20, 30, 55, 0.8);
-            box-shadow: 0 25px 40px -12px rgba(0,0,0,0.4);
         }
 
         .card-header {
@@ -209,13 +176,11 @@
             justify-content: center;
             font-size: 1.8rem;
             font-weight: 700;
-            box-shadow: 0 8px 14px -6px rgba(0,0,0,0.3);
         }
 
         .project-title h3 {
             font-size: 1.4rem;
             font-weight: 700;
-            letter-spacing: -0.3px;
         }
 
         .project-category {
@@ -241,7 +206,6 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 0.8rem;
-            margin-top: 0.5rem;
         }
 
         .repo-link {
@@ -249,10 +213,6 @@
             color: #94a3b8;
             text-decoration: none;
             font-family: monospace;
-            transition: color 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
         }
 
         .repo-link:hover {
@@ -268,13 +228,10 @@
             font-weight: 600;
             font-size: 0.8rem;
             transition: all 0.2s;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
 
         .visit-btn:hover {
             transform: scale(1.02);
-            background: linear-gradient(135deg, #a78bfa, #7c3aed);
-            box-shadow: 0 6px 14px rgba(139, 92, 246, 0.3);
         }
 
         .no-results {
@@ -297,8 +254,7 @@
         @media (max-width: 700px) {
             body { padding: 1rem; }
             .hero h1 { font-size: 2.8rem; }
-            .controls { flex-direction: column; align-items: stretch; border-radius: 1.5rem; }
-            .filters { justify-content: center; }
+            .controls { flex-direction: column; border-radius: 1.5rem; }
             .projects-grid { grid-template-columns: 1fr; }
         }
     </style>
@@ -310,7 +266,7 @@
         <div class="tagline">✦ creations by r29 ✦</div>
     </div>
 
-    <div class="stats" id="stats">
+    <div class="stats">
         <div class="stat-card"><span id="projectCount">0</span> projects</div>
         <div class="stat-card"><span id="categoryCount">0</span> categories</div>
     </div>
@@ -329,12 +285,11 @@
     </div>
 
     <div class="footer">
-        verser29 · live from GitHub · every project is a website
+        verser29 · every project is a website
     </div>
 </div>
 
 <script>
-    // Load websites.json
     let allProjects = [];
     let currentCategory = "all";
     let currentSearch = "";
@@ -352,14 +307,12 @@
                 throw new Error("Invalid JSON structure");
             }
         } catch (err) {
-            document.getElementById("projectsGrid").innerHTML = `<div class="no-results">⚠️ Could not load websites.json. Make sure the file exists in the same folder.</div>`;
-            console.error(err);
+            document.getElementById("projectsGrid").innerHTML = `<div class="no-results">⚠️ Could not load websites.json</div>`;
         }
     }
 
     function getUniqueCategories() {
-        const cats = allProjects.map(p => p.category);
-        return [...new Set(cats)];
+        return [...new Set(allProjects.map(p => p.category))];
     }
 
     function renderFilters() {
@@ -371,9 +324,8 @@
         });
         container.innerHTML = html;
 
-        // attach events
         document.querySelectorAll(".filter-btn").forEach(btn => {
-            btn.addEventListener("click", (e) => {
+            btn.addEventListener("click", () => {
                 document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
                 btn.classList.add("active");
                 currentCategory = btn.dataset.category;
@@ -400,12 +352,9 @@
     function renderProjects() {
         const filtered = getFilteredProjects();
         const grid = document.getElementById("projectsGrid");
-        const projectCountSpan = document.getElementById("projectCount");
-        const categoryCountSpan = document.getElementById("categoryCount");
 
-        projectCountSpan.innerText = filtered.length;
-        const uniqueCats = new Set(filtered.map(p => p.category)).size;
-        categoryCountSpan.innerText = uniqueCats;
+        document.getElementById("projectCount").innerText = filtered.length;
+        document.getElementById("categoryCount").innerText = new Set(filtered.map(p => p.category)).size;
 
         if (filtered.length === 0) {
             grid.innerHTML = `<div class="no-results">✨ no matching projects found</div>`;
@@ -414,7 +363,6 @@
 
         grid.innerHTML = filtered.map(project => {
             const firstLetter = project.name.charAt(0).toUpperCase();
-            // Extract repo name from GitHub URL for display
             const repoName = project.url.includes("github.com") ? project.url.split("/").pop() : project.name;
             return `
                 <div class="project-card">
@@ -427,12 +375,8 @@
                     </div>
                     <div class="project-description">${escapeHtml(project.description)}</div>
                     <div class="card-footer">
-                        <a href="${escapeHtml(project.url)}" class="repo-link" target="_blank" rel="noopener noreferrer">
-                            📁 ${escapeHtml(repoName)}
-                        </a>
-                        <a href="${escapeHtml(project.url)}" class="visit-btn" target="_blank" rel="noopener noreferrer">
-                            visit site →
-                        </a>
+                        <a href="${escapeHtml(project.url)}" class="repo-link" target="_blank" rel="noopener">📁 ${escapeHtml(repoName)}</a>
+                        <a href="${escapeHtml(project.url)}" class="visit-btn" target="_blank" rel="noopener">visit site →</a>
                     </div>
                 </div>
             `;
@@ -449,467 +393,6 @@
         });
     }
 
-    // search listener
-    document.getElementById("searchInput").addEventListener("input", (e) => {
-        currentSearch = e.target.value;
-        renderProjects();
-    });
-
-    loadProjects();
-</script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>verser29</title>
-    <meta name="description" content="verser29 — creative hub by r29. all my website creations in one place.">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            background: radial-gradient(circle at 10% 20%, #0b1120, #0a0f1a);
-            min-height: 100vh;
-            color: #eef2ff;
-            line-height: 1.5;
-            padding: 2rem 1.5rem;
-        }
-
-        /* animated background orbs */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 70% 30%, rgba(99, 102, 241, 0.15), transparent 50%),
-                        radial-gradient(circle at 20% 80%, rgba(168, 85, 247, 0.15), transparent 50%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .container {
-            position: relative;
-            z-index: 2;
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-
-        /* header */
-        .hero {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .hero h1 {
-            font-size: 4.5rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #fff, #c084fc, #60a5fa);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            margin-bottom: 0.5rem;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
-        }
-
-        .hero .tagline {
-            font-size: 1rem;
-            color: #94a3b8;
-            background: rgba(255,255,255,0.05);
-            display: inline-block;
-            padding: 0.4rem 1.2rem;
-            border-radius: 40px;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        /* stats row */
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2.5rem;
-            flex-wrap: wrap;
-        }
-
-        .stat-card {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(8px);
-            padding: 0.6rem 1.5rem;
-            border-radius: 60px;
-            border: 1px solid rgba(255,255,255,0.1);
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-
-        .stat-card span {
-            font-weight: 800;
-            font-size: 1.2rem;
-            color: #a78bfa;
-            margin-right: 0.3rem;
-        }
-
-        /* search + filter row */
-        .controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 2.5rem;
-            background: rgba(15, 23, 42, 0.4);
-            backdrop-filter: blur(8px);
-            padding: 0.8rem 1.5rem;
-            border-radius: 80px;
-            border: 1px solid rgba(255,255,255,0.08);
-        }
-
-        .search-box {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .search-box input {
-            width: 100%;
-            background: rgba(0,0,0,0.4);
-            border: 1px solid rgba(255,255,255,0.15);
-            padding: 0.6rem 1.2rem;
-            border-radius: 40px;
-            color: white;
-            font-size: 0.9rem;
-            outline: none;
-            transition: all 0.2s;
-        }
-
-        .search-box input:focus {
-            border-color: #8b5cf6;
-            background: rgba(0,0,0,0.6);
-        }
-
-        .search-box input::placeholder {
-            color: #94a3b8;
-        }
-
-        .filters {
-            display: flex;
-            gap: 0.6rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 0.4rem 1rem;
-            border-radius: 40px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: #cbd5e1;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .filter-btn:hover {
-            background: rgba(139, 92, 246, 0.3);
-            border-color: #8b5cf6;
-        }
-
-        .filter-btn.active {
-            background: #8b5cf6;
-            color: white;
-            border-color: #8b5cf6;
-        }
-
-        /* project grid — emphasis on each card */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-            gap: 1.8rem;
-            margin-top: 1rem;
-        }
-
-        .project-card {
-            background: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(12px);
-            border-radius: 2rem;
-            padding: 1.5rem;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.3);
-        }
-
-        .project-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(139, 92, 246, 0.5);
-            background: rgba(20, 30, 55, 0.8);
-            box-shadow: 0 25px 40px -12px rgba(0,0,0,0.4);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .project-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, #8b5cf6, #ec4899);
-            border-radius: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            font-weight: 700;
-            box-shadow: 0 8px 14px -6px rgba(0,0,0,0.3);
-        }
-
-        .project-title h3 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-        }
-
-        .project-category {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            background: rgba(139, 92, 246, 0.3);
-            display: inline-block;
-            padding: 0.2rem 0.7rem;
-            border-radius: 30px;
-            color: #c4b5fd;
-        }
-
-        .project-description {
-            margin: 1rem 0 1.2rem;
-            font-size: 0.9rem;
-            color: #cbd5e1;
-            line-height: 1.5;
-        }
-
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            margin-top: 0.5rem;
-        }
-
-        .repo-link {
-            font-size: 0.75rem;
-            color: #94a3b8;
-            text-decoration: none;
-            font-family: monospace;
-            transition: color 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .repo-link:hover {
-            color: #a78bfa;
-        }
-
-        .visit-btn {
-            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
-            padding: 0.5rem 1.2rem;
-            border-radius: 2rem;
-            text-decoration: none;
-            color: white;
-            font-weight: 600;
-            font-size: 0.8rem;
-            transition: all 0.2s;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-        }
-
-        .visit-btn:hover {
-            transform: scale(1.02);
-            background: linear-gradient(135deg, #a78bfa, #7c3aed);
-            box-shadow: 0 6px 14px rgba(139, 92, 246, 0.3);
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 3rem;
-            background: rgba(0,0,0,0.3);
-            border-radius: 2rem;
-            grid-column: 1 / -1;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 4rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.08);
-            font-size: 0.75rem;
-            color: #64748b;
-        }
-
-        @media (max-width: 700px) {
-            body { padding: 1rem; }
-            .hero h1 { font-size: 2.8rem; }
-            .controls { flex-direction: column; align-items: stretch; border-radius: 1.5rem; }
-            .filters { justify-content: center; }
-            .projects-grid { grid-template-columns: 1fr; }
-        }
-    </style>
-</head>
-<body>
-<div class="container">
-    <div class="hero">
-        <h1>verser29</h1>
-        <div class="tagline">✦ creations by r29 ✦</div>
-    </div>
-
-    <div class="stats" id="stats">
-        <div class="stat-card"><span id="projectCount">0</span> projects</div>
-        <div class="stat-card"><span id="categoryCount">0</span> categories</div>
-    </div>
-
-    <div class="controls">
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="🔍 search projects...">
-        </div>
-        <div class="filters" id="filterContainer">
-            <button class="filter-btn active" data-category="all">all</button>
-        </div>
-    </div>
-
-    <div class="projects-grid" id="projectsGrid">
-        <div class="no-results">✨ loading your creations...</div>
-    </div>
-
-    <div class="footer">
-        verser29 · live from GitHub · every project is a website
-    </div>
-</div>
-
-<script>
-    // Load websites.json
-    let allProjects = [];
-    let currentCategory = "all";
-    let currentSearch = "";
-
-    async function loadProjects() {
-        try {
-            const response = await fetch("websites.json");
-            if (!response.ok) throw new Error("Failed to load websites.json");
-            const data = await response.json();
-            if (data.websites && Array.isArray(data.websites)) {
-                allProjects = data.websites;
-                renderFilters();
-                renderProjects();
-            } else {
-                throw new Error("Invalid JSON structure");
-            }
-        } catch (err) {
-            document.getElementById("projectsGrid").innerHTML = `<div class="no-results">⚠️ Could not load websites.json. Make sure the file exists in the same folder.</div>`;
-            console.error(err);
-        }
-    }
-
-    function getUniqueCategories() {
-        const cats = allProjects.map(p => p.category);
-        return [...new Set(cats)];
-    }
-
-    function renderFilters() {
-        const categories = getUniqueCategories();
-        const container = document.getElementById("filterContainer");
-        let html = `<button class="filter-btn active" data-category="all">all</button>`;
-        categories.forEach(cat => {
-            html += `<button class="filter-btn" data-category="${cat}">${cat}</button>`;
-        });
-        container.innerHTML = html;
-
-        // attach events
-        document.querySelectorAll(".filter-btn").forEach(btn => {
-            btn.addEventListener("click", (e) => {
-                document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-                btn.classList.add("active");
-                currentCategory = btn.dataset.category;
-                renderProjects();
-            });
-        });
-    }
-
-    function getFilteredProjects() {
-        let filtered = [...allProjects];
-        if (currentCategory !== "all") {
-            filtered = filtered.filter(p => p.category === currentCategory);
-        }
-        if (currentSearch.trim() !== "") {
-            const query = currentSearch.toLowerCase();
-            filtered = filtered.filter(p => 
-                p.name.toLowerCase().includes(query) || 
-                p.description.toLowerCase().includes(query)
-            );
-        }
-        return filtered;
-    }
-
-    function renderProjects() {
-        const filtered = getFilteredProjects();
-        const grid = document.getElementById("projectsGrid");
-        const projectCountSpan = document.getElementById("projectCount");
-        const categoryCountSpan = document.getElementById("categoryCount");
-
-        projectCountSpan.innerText = filtered.length;
-        const uniqueCats = new Set(filtered.map(p => p.category)).size;
-        categoryCountSpan.innerText = uniqueCats;
-
-        if (filtered.length === 0) {
-            grid.innerHTML = `<div class="no-results">✨ no matching projects found</div>`;
-            return;
-        }
-
-        grid.innerHTML = filtered.map(project => {
-            const firstLetter = project.name.charAt(0).toUpperCase();
-            // Extract repo name from GitHub URL for display
-            const repoName = project.url.includes("github.com") ? project.url.split("/").pop() : project.name;
-            return `
-                <div class="project-card">
-                    <div class="card-header">
-                        <div class="project-icon">${firstLetter}</div>
-                        <div class="project-title">
-                            <h3>${escapeHtml(project.name)}</h3>
-                            <span class="project-category">✦ ${escapeHtml(project.category)}</span>
-                        </div>
-                    </div>
-                    <div class="project-description">${escapeHtml(project.description)}</div>
-                    <div class="card-footer">
-                        <a href="${escapeHtml(project.url)}" class="repo-link" target="_blank" rel="noopener noreferrer">
-                            📁 ${escapeHtml(repoName)}
-                        </a>
-                        <a href="${escapeHtml(project.url)}" class="visit-btn" target="_blank" rel="noopener noreferrer">
-                            visit site →
-                        </a>
-                    </div>
-                </div>
-            `;
-        }).join('');
-    }
-
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
-    }
-
-    // search listener
     document.getElementById("searchInput").addEventListener("input", (e) => {
         currentSearch = e.target.value;
         renderProjects();
