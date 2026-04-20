@@ -2,7 +2,7 @@
   "websites": [
     {
       "name": "Geodle",
-      "url": "https://r293239.github.io/Geodle/",
+      "url": "https://geodle.xyz/",
       "category": "game",
       "description": "Wordle but geography — guess the mystery country using flag and fact clues. Features daily challenges, path mode, and multiple game modes."
     },
@@ -32,7 +32,7 @@
     },
     {
       "name": "CentuarAI",
-      "url": "https://centuarai.netlify.app",
+      "url": "https://github.io/CentuarAI",
       "category": "ai",
       "description": "Browser-based chess AI with multiple difficulty levels (Beginner to Master), move analysis, undo/redo, and real-time board evaluation."
     }
